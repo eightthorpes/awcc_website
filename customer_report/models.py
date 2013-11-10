@@ -1,8 +1,9 @@
 from django.db import models
 
-# Create your models here.
-
 class Order(models.Model):
+    """
+    Ecwid product order information
+    """
     sku = models.CharField(max_length=5)
     slot = models.CharField(max_length=50)
     quantity = models.IntegerField()

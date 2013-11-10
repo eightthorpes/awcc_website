@@ -3,15 +3,14 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse
 import django_tables2 as tables
 from customer_report.models import Order
-from customer_report.ecwid import ecwid_api
+import customer_report.ecwid
 
 class OrderTable(tables.Table):
     class Meta:
         model = Order
 
 def grouped_time(request):
-    ea = ecwid_api()
-    ea.update_db()
+    customer_report.ecwid.refresh_order_data()
 
     query_set = Order.objects.all()
     table = OrderTable(query_set)
