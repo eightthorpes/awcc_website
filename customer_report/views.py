@@ -11,6 +11,7 @@ import customer_report.ecwid
 class OrderTable(tables.Table):
     class Meta:
         model = Order
+        attrs = {'align': 'right','width':'100%'}
 
 def auth_and_login(request, onsuccess='/', onfail='/login/'):
     user = authenticate(username=request.POST['username'], 
@@ -36,8 +37,9 @@ def logout_view(request):
 def grouped_time(request):
     customer_report.ecwid.refresh_order_data()
 
-    query_set = Order.objects.all()
+    query_set = Order.objects.exclude(payment_status='DECLINED')
     table = OrderTable(query_set)
-    return render_to_response('customer_reports/grouped_time.html',
+    return render_to_response(
+            'customer_reports/grouped_time.html',
             {"table": table},
             context_instance=RequestContext(request))

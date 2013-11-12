@@ -5,6 +5,7 @@
 """This module runs request to the Ecwid API to get product orders data."""
 
 from collections import defaultdict
+from string import capwords
 import itertools
 import json
 import urllib
@@ -44,7 +45,7 @@ def __fill_in_sku_dicts(orders):
         if order['paymentStatus'] == "CANCELLED":
             continue
         items = order['items']
-        customer_name = order['customerName']
+        customer_name = capwords(order['customerName'])
         for item in items:
             quantity = item['quantity']
             if ECWID_SKUS.count(item['sku']) == 0:
