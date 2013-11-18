@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 {% load django_tables2 %}
-{% render_table table %}
+{% for tour in page_data %}
+<h2>{{ tour.name }}</h2>
+{% render_table tour.table %}
+<br>
+{% endfor %}
 {% endblock %}

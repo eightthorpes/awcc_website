@@ -3,15 +3,18 @@
 <style type="text/css">
     body { color: #000; background: #FFF; padding: 0 5em; margin: 0 }
     h1 { padding: 2em 1em; background: #556677 }
-    h2 { color: #bf8; border-top: 1px dotted #fff; margin-top: 2em }
+    h2 { color: black; border-top: 1px dotted #fff; margin-top: 2em }
     p  { color: #000; margin: 1em 0 }
+    table { table-layout: fixed; text-align: left; border: 1px solid lightgray;}
+    th, td { width: em }
+    tr.odd { background-color: lightgray }
 </style>
 <body>
     <h1>AWCC Sales Report Generator</h1>
     {% if user.is_authenticated %}
-    <p>Logged in as {{ user.username }}.<a href="/logout">Logout</a></p>
+    <p>Logged in as {{ user.username }}.<a href="/logout"> Logout</a></p>
     {% else %}
-    <p>Welcome, new user. Please <a href="/login">log in.</a></p>
+    <p>Welcome, new user. Please <a href="/login"> log in.</a></p>
     {% endif %}
     {% block content %}
     {% endblock %}
