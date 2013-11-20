@@ -1,3 +1,5 @@
+import os
+
 TRAIN_SKUS = {'name': "Train Tour", 'skus': ['00164',]}
 BRUNCH_SKUS = {'name': "Brunch Tour", 'skus': ['00116', '00118', '00165', '00166', '00169']}
 LUNCH_SKUS = {'name': "Lunch Tour", 'skus': ['00167',]}
@@ -20,6 +22,6 @@ ECWID_SKUS = TRAIN_SKUS['skus'] + BRUNCH_SKUS['skus'] + LUNCH_SKUS['skus'] + DIN
 
 ECWID_URL = "https://app.ecwid.com/api/v1"
 ECWID_STORE_ID = "734045"
-ECWID_AUTH_KEY = "wgx7f3yye2JX"
+ECWID_AUTH_KEY = os.environ['ECWID_AUTH_KEY']
 ECWID_FROM = "2013-08-01"
 ECWID_TO   = "2013-12-31"
