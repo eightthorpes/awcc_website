@@ -3,7 +3,7 @@ import os
 TRAIN_SKUS = {'name': "Train Tour", 'skus': ['00164',]}
 BRUNCH_SKUS = {'name': "Brunch Tour", 'skus': ['00116', '00118', '00165', '00166', '00169']}
 LUNCH_SKUS = {'name': "Lunch Tour", 'skus': ['00167',]}
-DINNER_SKUS = {'name': "Dinner Tour", 'skus': ['00138',]}
+DINNER_SKUS = {'name': "Dinner Tour", 'skus': ['00168',]}
 TOUR_SKUS = {'name': "Regular House Tour", 
         'skus': ['00091', '00093', '00094', '00095', '00096', '00097',
         '00098', '00099', '00100', '00101', '00102', '00103', '00104',
