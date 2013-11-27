@@ -3,8 +3,7 @@
 {% load django_tables2 %}
 {% for tour in page_data %}
 <h2>{{ tour.name }}</h2>
-<h2>Total Sold: {{ tour.sum }}</h2>
+<h2>Total Sold: {{ tour.sum }} Remaining: {{ tour.remaining }}</h2>
 {% render_table tour.table %}
-<br>
-{% endfor %}
+<br> {% endfor %}
 {% endblock %}

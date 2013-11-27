@@ -22,6 +22,7 @@ ECWID_SKUS = TRAIN_SKUS['skus'] + BRUNCH_SKUS['skus'] + LUNCH_SKUS['skus'] + DIN
 
 ECWID_URL = "https://app.ecwid.com/api/v1"
 ECWID_STORE_ID = "734045"
-ECWID_AUTH_KEY = os.environ['ECWID_AUTH_KEY']
+ORDER_AUTH_KEY = os.environ['ORDER_AUTH_KEY']
+PRODUCT_AUTH_KEY = os.environ['PRODUCT_AUTH_KEY']
 ECWID_FROM = "2013-08-01"
 ECWID_TO   = "2013-12-31"
