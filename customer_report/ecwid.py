@@ -1,7 +1,3 @@
-# ecwid.py
-# Functions for retrieving data using Ecwid's API
-# TODO: This currently only gets the orders data
-# TODO: Refactor __fill_in_sku_dicts into two functions
 """This module runs request to the Ecwid API to get product orders data."""
 
 from datetime import datetime
@@ -43,31 +39,6 @@ def __do_order_api_request(base_url):
         offset += 200
     return orders
 
-def __fill_in_sku_dicts(orders):
-    """
-    1. Create a dictionary of product decriptions to sku numbers.
-    2. Create a dictionary of orders per sku number.
-    """
-    sku_description = \
-        defaultdict(itertools.repeat('None ordered yet').next)
-    sku_orders = defaultdict(list)
-    for order in orders:
-        # Filter out "canceled" from orders
-        if order['paymentStatus'] == "CANCELLED":
-            continue
-        items = order['items']
-        customer_name = capwords(order['customerName'])
-        for item in items:
-            quantity = item['quantity']
-            if ECWID_SKUS.count(item['sku']) == 0:
-                continue
-            sku_orders[item['sku']].append({
-                    'customerName': customer_name,
-                    'quantity': quantity,
-                    'paymentStatus': order['paymentStatus']})
-            sku_description[item['sku']] = item['name']
-    return sku_description, sku_orders
-
 def refresh_order_data():
     """
     External function to get orders from Ecwid and to update the database
@@ -77,7 +48,6 @@ def refresh_order_data():
         "%s/%s/orders?secure_auth_key=%s&from_date=%s&to_date=%s&offset=" % \
         (ECWID_URL, ECWID_STORE_ID, ORDER_AUTH_KEY, ECWID_FROM, ECWID_TO)
     orders = __do_order_api_request(base_url)
-    #(sku_description, sku_orders) = __fill_in_sku_dicts(orders)
     # Delete all existing entries
     for order_obj in Order.objects.all():
         order_obj.delete()
@@ -90,14 +60,14 @@ def refresh_order_data():
                      product=product_object,
                      slot=item['name'],
                      quantity=item['quantity'],
-                     customer_name=order['customerName'],
-                     payment_status=order['paymentStatus'])
+                     customer_name = capwords(order['customerName']),
+                     payment_status = order['paymentStatus'])
             record.save()
     Order.last_update = datetime.utcnow().replace(tzinfo=utc)
 
 def __do_product_api_request(url):
     """
-    Run the http request to ecwid and get the product list. 
+    Run the http request to ecwid and get the product list.
     """
     handle = urllib.urlopen(url)
     json_string = handle.read().decode("utf8")
@@ -126,7 +96,7 @@ def refresh_product_data():
     "enabled": true,
     "description": "",
     "descriptionTruncated": false
-    },  
+    },
     """
     url = "%s/%s/products?secure_auth_key=%s&from_date=%s&to_date=%s&hidden_products=true" \
        % (ECWID_URL, ECWID_STORE_ID, PRODUCT_AUTH_KEY, ECWID_FROM, ECWID_TO)
